@@ -35,7 +35,6 @@ bower_components
 .lock-wscript
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directories
 node_modules/
@@ -103,5 +102,4 @@ dist
 # TernJS port file
 .tern-port
 
-/build
-src/configs/FirebaseConfig.js
+

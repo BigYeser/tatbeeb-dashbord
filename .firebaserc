@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "doctor-fe045"
-  }
+    "default": "doctor-fe045",
+    "staging": "doctor-fe045"
+  },
+  "targets": {},
+  "etags": {}
 }
