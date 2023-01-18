@@ -1,31 +1,39 @@
-import React, { useEffect } from "react";
-import { Card, Table, Space, Button, Tabs, Modal, Row, Col } from "antd";
+import { useEffect } from "react";
+import { Row, Col } from "antd";
 import StatisticWidget from "components/shared-components/StatisticWidget";
 import DataDisplayWidget from "components/shared-components/DataDisplayWidget";
-import { BarChartOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 import ChartWidget from "components/shared-components/ChartWidget";
-import { getUserCountInit } from "redux/actions/DashboardActions";
+import { getUserCountInit , getDoctorCountInit } from "redux/actions/DashboardActions";
 const Home = () => {
-  const { userCount, error, loading, deleted } = useSelector(
+  const { userCount, doctorCount } = useSelector(
     (state) => ({
-      userCount: state.dashboard.data,
-      error: state.dashboard.error,
-      loading: state.dashboard.loading,
-      delete: state.dashboard.delete,
+      userCount: state.dashboard.userData,
+      userError: state.dashboard.userError,
+      userLoading: state.dashboard.userLoading,
+      userDelete: state.dashboard.userDelete,
+
+      doctorCount: state.dashboard.doctorData,
+      doctorError: state.dashboard.doctorError,
+      doctorLoading: state.dashboard.doctorLoading,
+      doctorDelete: state.dashboard.doctorDelete,
+
     }),
     shallowEqual
   );
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserCountInit());
-    console.log("kepanggil lagi bos");
+    dispatch(getDoctorCountInit());
   }, [dispatch]);
   const visitorChartData = {
     series: [
       {
-        name: "Transaction",
+        name: "Charge",
         data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10],
       },
       {
@@ -67,7 +75,7 @@ const Home = () => {
             <Col xs={24} sm={24} md={24} lg={24} xl={8}>
               <DataDisplayWidget
                 icon={<UserOutlined />}
-                value={userCount}
+                value={doctorCount}
                 title="Doctor Register"
                 color="cyan"
                 size={"md"}
@@ -91,7 +99,7 @@ const Home = () => {
           <Row gutter={16}>
             <Col span={24}>
               <ChartWidget
-                title="Transaction Data"
+                title="Charge Data"
                 series={visitorChartData.series}
                 xAxis={visitorChartData.categories}
                 height={400}

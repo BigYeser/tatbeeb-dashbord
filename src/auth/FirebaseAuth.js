@@ -2,9 +2,9 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import firebaseConfig from "configs/FirebaseConfig";
+import FirebaseConfig from './src/config/FirebaseConfig';
 import "firebase/functions";
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(FirebaseConfig);
 
 // firebase utils
 const db = firebase.firestore();

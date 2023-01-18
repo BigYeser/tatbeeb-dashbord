@@ -2,25 +2,38 @@ import { all, takeEvery, put, fork, call } from "redux-saga/effects";
 
 import {
   USERS_FETCH_DATA_INIT,
-  USERS_FETCH_DATA_SUCCESS,
-  USERS_FETCH_DATA_FAIL,
   DELETE_USER_INIT,
-  DELETE_USER_SUCCESS,
-  DELETE_USER_ERROR,
+  THIS_USER,
   //plopImportConstant
 } from "../constants/Users";
 
+import { AUTH_TOKEN } from "redux/constants/Auth";
 import {
-  fetchUsersInit,
   fetchUsersSuccess,
   fetchUsersFail,
-  deleteUserInit,
   deleteUserSuccess,
   deleteUserError,
+  fetchThisUser,
   //plopImportAction
 } from "../actions/Users";
 
 import FirebaseService from "services/FirebaseService";
+
+
+export function* getThisUser(){
+  yield takeEvery(THIS_USER, function* (){
+    try{
+      const user = yield call(FirebaseService.fetchDocument("Users", localStorage.getItem(AUTH_TOKEN)));
+      console.log(user);
+      yield put(fetchThisUser(user));
+
+    }
+    catch (error) {
+      console.log("error : " + error);
+      yield put(fetchUsersFail(error));
+    }
+  });
+};
 
 export function* getUsers() {
   yield takeEvery(USERS_FETCH_DATA_INIT, function* () {
@@ -40,6 +53,10 @@ export function* getUsers() {
         };
       });
 
+      console.log(
+        "🚀 ~ file: ChargeSaga.js ~ line 22 ~ changeTime ~ changeTime",
+        users
+      );
       console.log(
         "🚀 ~ file: TransactionSaga.js ~ line 22 ~ changeTime ~ changeTime",
         users
@@ -75,6 +92,7 @@ export default function* rootSaga() {
   yield all([
     fork(getUsers),
     fork(deleteUser),
+    fork(getThisUser),
     //plopExport
   ]);
 }

@@ -5,6 +5,7 @@ import Users from "./Users";
 import DoctorCategory from "./DoctorCategory";
 import Doctor from "./Doctor";
 import WithdrawRequest from "./WithdrawRequestReducer";
+import Charge from "./ChargeReducer";
 import Transaction from "./TransactionReducer";
 import Dashboard from "./DashboardReducer";
 import Settings from "./SettingsReducer";
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   doctorCategory: DoctorCategory,
   doctor: Doctor,
   withdrawRequest:WithdrawRequest,
+charge:Charge,
 transaction:Transaction,
 dashboard:Dashboard,
 settings:Settings,

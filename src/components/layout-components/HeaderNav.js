@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Layout } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Logo from "./Logo";
-import NavPanel from "./NavPanel";
 import NavSearch from "./NavSearch";
 import { toggleCollapsedNav, onMobileNavToggle } from "redux/actions/Theme";
 import {
@@ -26,7 +25,7 @@ export const HeaderNav = (props) => {
     onMobileNavToggle,
     isMobile,
     currentTheme,
-    direction,
+
   } = props;
   const [searchActive, setSearchActive] = useState(false);
 

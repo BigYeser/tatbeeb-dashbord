@@ -5,9 +5,9 @@ import {
   USERS_FETCH_DATA_INIT,
   USERS_FETCH_DATA_FAIL,
   USERS_FETCH_DATA_SUCCESS,
+  THIS_USER,
 } from "../constants/Users";
 
-import { createReducer } from "redux-act";
 
 const initialState = {
   data: [],
@@ -36,6 +36,13 @@ const users = (state = initialState, action) => {
         loading: false,
         error: action.error,
       };
+    case THIS_USER:
+      return {
+        ...state,
+        data: action.data,
+        loading: true,
+      };
+
     case DELETE_USER_INIT:
       return { ...state, loading: true };
     case DELETE_USER_SUCCESS:

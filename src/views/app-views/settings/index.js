@@ -10,37 +10,29 @@ import {
   message,
   notification,
   Tabs,
-  Table,
-  Space,
+  //Table,
+ // Space,
 } from "antd";
-import AvatarStatus from "components/shared-components/AvatarStatus";
-import Flex from "components/shared-components/Flex";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+//import AvatarStatus from "components/shared-components/AvatarStatus";
+//import Flex from "components/shared-components/Flex";
+//import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import {
-  deleteImageCarouselInit,
-  getImageCarouselInit,
+ // deleteImageCarouselInit,
+//  getImageCarouselInit,
   getWithdrawalSettingsInit,
-  saveImageCarouselInit,
   setWithdrawalPercentageInit,
 } from "redux/actions/SettingsActions";
-import { Link, useHistory } from "react-router-dom";
+//import { Link, useHistory } from "react-router-dom";
 const Settings = () => {
   const {
     settings,
     error,
     loading,
-    deleted,
     success,
-    fileList,
-    previewVisible,
-    previewImage,
-    previewTitle,
-    imageCarouselData,
-    getImageCarouselLoading,
-    getImageCarouselError,
-    getImageCarouselSuccess,
-    deleteImageCarouselSuccess,
+  //  imageCarouselData,
+  //  getImageCarouselLoading,
+  //  deleteImageCarouselSuccess,
   } = useSelector(
     (state) => ({
       settings: state.settings.data,
@@ -49,11 +41,11 @@ const Settings = () => {
       delete: state.settings.delete,
       success: state.settings.success,
       fileList: [],
-      imageCarouselData: state.settings.imageCarouselData,
-      getImageCarouselLoading: state.settings.getImageCarouselLoading,
-      getImageCarouselError: state.settings.getImageCarouselError,
-      getImageCarouselSuccess: state.settings.getImageCarouselSuccess,
-      deleteImageCarouselSuccess: state.settings.deleteImageCarouselSuccess,
+    //  imageCarouselData: state.settings.imageCarouselData,
+    //  getImageCarouselLoading: state.settings.getImageCarouselLoading,
+    //  getImageCarouselError: state.settings.getImageCarouselError,
+    //  getImageCarouselSuccess: state.settings.getImageCarouselSuccess,
+  //    deleteImageCarouselSuccess: state.settings.deleteImageCarouselSuccess,
     }),
     shallowEqual
   );
@@ -62,9 +54,9 @@ const Settings = () => {
   const { confirm } = Modal;
   useEffect(() => {
     dispatch(getWithdrawalSettingsInit());
-    dispatch(getImageCarouselInit());
+  //  dispatch(getImageCarouselInit());
   }, [dispatch]);
-  const history = useHistory();
+  //const history = useHistory();
   const openNotificationError = (errorMessage) => {
     const args = {
       message: "Error",
@@ -76,10 +68,10 @@ const Settings = () => {
   if (error) {
     openNotificationError(error);
   }
-  console.log("success : " + success);
   if (success === true) {
     message.success("Success set withdrawal percentage");
   }
+  /*
   if (deleteImageCarouselSuccess === true) {
     message.success("Success delete image carousel");
   }
@@ -101,10 +93,11 @@ const Settings = () => {
       imageId,
       imageUrl
     );
-    let imageData = { imageId, imageUrl };
-    dispatch(deleteImageCarouselInit(imageData));
+   // let imageData = { imageId, imageUrl };
+   // dispatch(deleteImageCarouselInit(imageData));
+  
   };
-
+ */
   function showPromiseConfirm(data) {
     confirm({
       title: `Are you sure you want to set the withdrawal percentage to be ${data.percentage}% and tax ${data.tax}%`,
@@ -128,7 +121,7 @@ const Settings = () => {
   function onFinishFailed(error) {
     openNotificationError(error);
   }
-
+/*
   const columns = [
     {
       title: "Image",
@@ -179,6 +172,8 @@ const Settings = () => {
       ),
     },
   ];
+
+  */
   return (
     <div>
       <Card>
@@ -238,6 +233,7 @@ const Settings = () => {
               </Col>
             </Row>
           </TabPane>
+          {/*
           <TabPane tab="Client Settings" key="2">
             <Row>
               <Col span={16}>
@@ -265,6 +261,7 @@ const Settings = () => {
               </Col>
             </Row>
           </TabPane>
+                */}
         </Tabs>
       </Card>
     </div>

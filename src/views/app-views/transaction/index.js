@@ -3,7 +3,7 @@ import { getTransactionInit } from "redux/actions/TransactionActions";
 import { Card, Table } from "antd";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 const Transaction = () => {
-  const { transactionList, error, loading, deleted } = useSelector(
+  const { transactionList, loading } = useSelector(
     (state) => ({
       transactionList: state.transaction.data,
       error: state.transaction.error,
@@ -12,7 +12,18 @@ const Transaction = () => {
     }),
     shallowEqual
   );
-  const dispatch = useDispatch();
+  // eslint-disable-next-line array-callback-return
+  transactionList.map(el => {
+    let date = new Date(el.createdAt)
+    el.createdAt_newFormate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+'\n'+dateFormat(date.getHours())+":"+dateFormat(date.getMinutes());
+  });
+
+  function dateFormat(el){
+    if(el < 10){
+      return "0"+el;
+    }
+    return el;
+  }  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTransactionInit());
@@ -21,47 +32,37 @@ const Transaction = () => {
   const columns = [
     {
       title: "Date",
-      key: "date",
-      dataIndex: "createdAt",
-      width: "20%",
+      key: "createdAt_newFormate",
+      dataIndex: "createdAt_newFormate",
     },
     {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      width: "10%",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-      width: "15%",
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: "10%",
     },
     {
-      title: "Link Receipt",
-      key: "amount",
-      render: (text, record) => (
-        <>
-          {
-            <a href={record.linkReceipt} target="_blank" rel="noreferrer">
-              Link Receipt
-            </a>
-          }
-        </>
-      ),
-      width: "10%",
+        title: "User Id",
+        dataIndex: "userId",
+        key: "userId",
     },
     {
-      title: "User Id",
-      dataIndex: "userId",
-      key: "amount",
+        title: "time slot ID",
+        dataIndex: "timeSlotId",
+        key: "timeSlotId",
     },
+   /*
+    {
+      title: "Charged",
+      dataIndex: "charged",
+      key: "charged",
+      render : (text) => String(text),
+    },
+    */
   ];
   return (
     <div>

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Card, Table, Space, Button, Tabs, Modal } from "antd";
+import { useEffect } from "react";
+import { Card, Table, Space, Modal } from "antd";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   getWithdrawRequestInit,
   setWihthdrawalRequestCompleteInit,
 } from "redux/actions/WithdrawRequestActions";
 const Transaction = () => {
-  const { withdrawRequestList, error, loading, deleted } = useSelector(
+  const { withdrawRequestList, loading } = useSelector(
     (state) => ({
       withdrawRequestList: state.withdrawRequest.data,
       error: state.withdrawRequest.error,
@@ -83,7 +83,7 @@ const Transaction = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => showConfirmCompleteWithdrawal(record)}>Complete</a>
+          <a href="any.com" onClick={() => showConfirmCompleteWithdrawal(record)}>Complete</a>
         </Space>
       ),
     },

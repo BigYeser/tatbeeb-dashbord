@@ -1,9 +1,10 @@
 import { Card, Table, Space, Button, Modal, message } from "antd";
-import AvatarStatus from "components/shared-components/AvatarStatus";
-import Flex from "components/shared-components/Flex";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
 import { fetchDoctorCategoryInit } from "redux/actions/DoctorCategory";
+import Flex from "components/shared-components/Flex";
+
+import AvatarStatus from "components/shared-components/AvatarStatus";
 import { Link, useHistory } from "react-router-dom";
 import {
   DeleteOutlined,
@@ -14,7 +15,10 @@ import {
 import FirebaseService from "services/FirebaseService";
 const { confirm } = Modal;
 const DoctorCategory = () => {
-  const { doctorCategoryList, error, loading, deleted } = useSelector(
+  const {
+     doctorCategoryList,
+     loading 
+    } = useSelector(
     (state) => ({
       doctorCategoryList: state.doctorCategory.data,
       error: state.doctorCategory.error,
@@ -51,6 +55,11 @@ const DoctorCategory = () => {
       key: "categoryname",
     },
     {
+      title: "الاختصاص",
+      dataIndex: "categoryTranslation",
+      key: "categoryTranslation",
+    },
+    {
       title: "Action",
       dataIndex: "",
       key: "x",
@@ -65,7 +74,10 @@ const DoctorCategory = () => {
                   "new-doctor-category/" +
                   record.id +
                   "/" +
-                  record.categoryName,
+                  record.categoryName +
+                  "/" +
+                  record.categoryTranslation +
+                  "/",             
               })
             }
           ></Button>
@@ -78,6 +90,10 @@ const DoctorCategory = () => {
       ),
     },
   ];
+
+
+
+
   function showPromiseConfirm(categoryName, documentId) {
     confirm({
       title: `Do you want to delete ${categoryName} category.?"`,
@@ -100,6 +116,9 @@ const DoctorCategory = () => {
       message.error(error.message);
     }
   };
+
+
+  
   return (
     <Card
       title="Doctor Category"

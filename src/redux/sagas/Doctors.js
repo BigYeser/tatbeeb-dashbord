@@ -8,7 +8,6 @@ import {
   addTopRatedDoctorSuccess,
   addTopRatedDoctorError,
   deleteDoctorSuccess,
-  deleteDoctorError,
   setDoctorAccountStatusSuccess,
   setDoctorAccountStatusError,
   //plopImportAction
@@ -34,6 +33,7 @@ export function* getDoctors() {
           order: "desc",
         },
       });
+      console.log(doctors);
       let changeTime = doctors.map((element) => {
         var d = new Date(0);
         d.setUTCSeconds(element.createdAt.seconds);

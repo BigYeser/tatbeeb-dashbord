@@ -1,27 +1,17 @@
-import React, { useEffect } from "react";
 import {
   Card,
-  Row,
-  Col,
-  InputNumber,
-  Input,
   Form,
   Button,
   Modal,
   message,
-  notification,
-  Tabs,
-  Table,
-  Space,
   Upload,
 } from "antd";
 import { shallowEqual, useSelector, useDispatch } from "react-redux";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import { useHistory, useParams } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import { saveImageCarouselInit } from "redux/actions/SettingsActions";
 const NewImageCarousel = () => {
   const history = useHistory();
-  const { id, name } = useParams();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const { confirm } = Modal;

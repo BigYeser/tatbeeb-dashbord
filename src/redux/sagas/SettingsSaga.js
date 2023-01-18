@@ -7,7 +7,6 @@ import {
   saveImageCarouselSuccess,
   saveImageCarouselError,
   getImageCarouselSuccess,
-  getImageCarouselError,
   deleteImageCarouselSuccess,
   deleteImageCarouselError,
   //plopImportAction
@@ -51,7 +50,6 @@ export function* saveImageCarousel() {
         action.data.fileName,
         action.data.file
       );
-      console.log("upload data " + urlImage);
       let data = { imageUrl: urlImage, fileName: action.data.fileName };
       yield call(FirebaseService.saveImageCarouselData, data);
       yield put(saveImageCarouselSuccess());

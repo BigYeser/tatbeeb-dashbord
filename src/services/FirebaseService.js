@@ -1,20 +1,12 @@
 import {
   firebase,
-  functions,
   auth,
   db,
   storageRef,
   googleAuthProvider,
   facebookAuthProvider,
 } from "auth/FirebaseAuth";
-import { getStorage, ref, deleteObject } from "firebase/storage";
 const FirebaseService = {};
-
-FirebaseService.signInEmailRequest = async (email, password) =>
-  await auth
-    .signInWithEmailAndPassword(email, password)
-    .then((user) => user)
-    .catch((err) => err);
 
 FirebaseService.signInEmailRequest = async (email, password) =>
   await auth
@@ -81,21 +73,30 @@ FirebaseService.fetchCollection = async (collection, options = {}) => {
 };
 
 FirebaseService.uploadImage = async (fileName, file) => {
-  console.log("filename : " + fileName);
   let url = await storageRef.ref("uploads").child(fileName).put(file);
   return url.ref.getDownloadURL();
 };
 
-FirebaseService.addDoctorCategory = async (categoryName, iconUrl) => {
+FirebaseService.addDoctorCategory = async (categoryName, categoryTranslation, iconUrl) => {
   try {
     await db.collection("DoctorCategory").add({
       categoryName,
+      categoryTranslation,
       iconUrl,
     });
   } catch (error) {
     throw error;
   }
 };
+
+FirebaseService.getDoctorCategory = async (categoryId) =>{
+     try {
+    await db.collection("DoctorCategory").doc(categoryId).delete();
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 FirebaseService.removeDoctorCategory = async (categoryId) => {
   try {
@@ -105,15 +106,17 @@ FirebaseService.removeDoctorCategory = async (categoryId) => {
   }
 };
 
-FirebaseService.editDoctorCategory = async (id, categoryName, iconUrl) => {
+FirebaseService.editDoctorCategory = async (id, categoryName,categoryTranslation, iconUrl) => {
   try {
     if (iconUrl == null) {
       await db.collection("DoctorCategory").doc(id).update({
         categoryName,
+        categoryTranslation,
       });
     } else {
       await db.collection("DoctorCategory").doc(id).set({
         categoryName,
+        categoryTranslation,
         iconUrl,
       });
     }

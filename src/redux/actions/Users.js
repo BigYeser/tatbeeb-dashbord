@@ -2,7 +2,6 @@ import {
   DELETE_USER_INIT,
   DELETE_USER_SUCCESS,
   DELETE_USER_ERROR,
-  createAction,
 } from "../constants/Users";
 
 // import { firebase } from "..auth/FirebaseAuth.js";
@@ -15,6 +14,7 @@ import {
   USERS_FETCH_DATA_INIT,
   USERS_FETCH_DATA_SUCCESS,
   USERS_FETCH_DATA_FAIL,
+  THIS_USER,
 } from "../constants/Users";
 
 export const fetchUsersInit = (userId = "") => {
@@ -24,6 +24,10 @@ export const fetchUsersInit = (userId = "") => {
 export const fetchUsersSuccess = (data) => {
   return { type: USERS_FETCH_DATA_SUCCESS, data };
 };
+
+export const fetchThisUser = (userId) =>{
+  return {type: THIS_USER};
+}
 
 export const fetchUsersFail = (error) => {
   return { type: USERS_FETCH_DATA_FAIL, error };

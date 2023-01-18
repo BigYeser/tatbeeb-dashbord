@@ -1,18 +1,17 @@
 import {
-  DashboardOutlined,
+  HomeOutlined,
   UserOutlined,
   DollarCircleOutlined,
   SwapOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { APP_PREFIX_PATH } from "configs/AppConfig";
-import { FaBeer } from "react-icons/fa";
 const dashBoardNavTree = [
   {
     key: "home",
     path: `${APP_PREFIX_PATH}/home`,
     title: "home",
-    icon: DashboardOutlined,
+    icon: HomeOutlined,
     breadcrumb: false,
     submenu: [],
   },
@@ -58,16 +57,28 @@ const WithdrawNavTree = [
     submenu: [],
   },
 ];
-const TransactionNavTree = [
+const ChargeNavTree = [
   {
-    key: "transaction",
-    path: `${APP_PREFIX_PATH}/transaction`,
-    title: "Transaction",
+    key: "charge",
+    path: `${APP_PREFIX_PATH}/charge`,
+    title: "Charges",
     icon: SwapOutlined,
     breadcrumb: false,
     submenu: [],
   },
 ];
+
+const TransactionNavTree = [
+  {
+    key: "transaction",
+    path: `${APP_PREFIX_PATH}/transaction`,
+    title: "Transactions",
+    icon: SwapOutlined,
+    breadcrumb: false,
+    submenu: [],
+  },
+];
+
 const SettingsNavTree = [
   {
     key: "settings",
@@ -85,8 +96,8 @@ const navigationConfig = [
   ...usersNavTree,
   ...DoctorsNavTree,
   ...DoctorCategoryNavTree,
-
   ...WithdrawNavTree,
+  ...ChargeNavTree,
   ...TransactionNavTree,
   ...SettingsNavTree,
   //NavigationConfig

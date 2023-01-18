@@ -1,40 +1,40 @@
-import { Card, Table, Space, Button, Tabs, Modal, Tag, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import { Card, Table, Space, Button, Tabs, Modal, Tag } from "antd";
+import { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import firebase from 'firebase/app';
 import {
-  addTopRatedDoctorInit,
-  deleteTopRatedInit,
+  //addTopRatedDoctorInit,
+  //deleteTopRatedInit,
   fetchDoctorInit,
-  fetchTopRatedDoctorInit,
+ // fetchTopRatedDoctorInit,
   deleteDoctorInit,
   setDoctorAccountStatusInit,
 } from "redux/actions/Doctor";
 import Flex from "components/shared-components/Flex";
 import AvatarStatus from "components/shared-components/AvatarStatus";
 import {
-  StarOutlined,
-  StarFilled,
-  ExclamationCircleOutlined,
+ // StarOutlined,
+ // StarFilled,
+ // ExclamationCircleOutlined,
   DeleteOutlined,
   StopOutlined,
   CheckOutlined,
-  SearchOutlined,
+  //DownloadOutlined,
+  FilePdfOutlined,
 } from "@ant-design/icons";
 const { TabPane } = Tabs;
 const { confirm } = Modal;
 const Doctors = () => {
   const {
     doctorList,
-    listTopRatedDoctor,
-    topRatedLoading,
-    error,
+  //  listTopRatedDoctor,
+  //  topRatedLoading,
     loading,
-    deleted,
   } = useSelector(
     (state) => ({
       doctorList: state.doctor.data,
-      listTopRatedDoctor: state.doctor.topRatedDoctor,
-      topRatedLoading: state.doctor.topRatedLoading,
+   //   listTopRatedDoctor: state.doctor.topRatedDoctor,
+    //  topRatedLoading: state.doctor.topRatedLoading,
       error: state.doctor.error,
       loading: state.doctor.loading,
       delete: state.doctor.delete,
@@ -42,19 +42,32 @@ const Doctors = () => {
     shallowEqual
   );
 
+  // eslint-disable-next-line array-callback-return
+  doctorList.map(el => {
+    let date = new Date(el.createdAt)
+    el.createdAt_newFormate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+"\n"+dateFormat(date.getHours())+":"+dateFormat(date.getMinutes());
+  });
+
+  function dateFormat(el){
+    if(el < 10){
+      return "0"+el;
+    }
+    return el;
+  }
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchDoctorInit());
-    dispatch(fetchTopRatedDoctorInit());
+   // dispatch(fetchTopRatedDoctorInit());
   }, [dispatch]);
 
   const columns = [
     {
       title: "Date Register",
-      key: "date",
-      dataIndex: "createdAt",
-      width: "20%",
+      key: "createdAt_newFormate",
+      dataIndex: "createdAt_newFormate",
+      width: "10%",
     },
     {
       title: "Doctor Picture",
@@ -65,7 +78,6 @@ const Doctors = () => {
           <AvatarStatus
             size={30}
             src={record.doctorPicture}
-            name={record.doctorName}
           />
         </Flex>
       ),
@@ -76,10 +88,17 @@ const Doctors = () => {
       key: "doctorName",
     },
     {
+      title: "Phone",
+      dataIndex: "doctorPhone",
+      key: "doctorPhone",
+    },
+    /*
+    {
       title: "Hospital",
       dataIndex: "doctorHospital",
       key: "doctorHospital",
     },
+    */
     {
       title: "Category / Specialist",
       dataIndex: ["doctorCategory", "categoryName"],
@@ -118,11 +137,13 @@ const Doctors = () => {
                 : () => showConfirmActivate(record.doctorName, record.id)
             }
           ></Button>
+          {/*
           <Button
             icon={<StarOutlined />}
             shape="circle"
             onClick={() => showConfirmAddTopRated(record.doctorName, record.id)}
           ></Button>
+          */}
           <Button
             icon={<DeleteOutlined />}
             shape="circle"
@@ -130,11 +151,33 @@ const Doctors = () => {
               showConfirmDeleteDoctor(record.doctorName, record.id)
             }
           ></Button>
+           <Button
+            icon={<FilePdfOutlined />}
+            shape="circle"
+            onClick={() =>{
+             // console.log(record.certificateUrl);
+              var myRegexp = new RegExp("uploads%2F(.*\\.pdf)");
+              var match = myRegexp.exec(record.certificateUrl);
+             
+
+              
+              const path = "uploads/"+match[1];
+              const files = firebase.storage().ref(path);
+              console.log(files);
+                 files.getDownloadURL().then((url) => {
+                  window.open(url, "_blank")
+                });
+                
+              
+              }          
+            }
+          ></Button>
         </Space>
+
       ),
     },
   ];
-
+/*
   const topRatedDoctorColumns = [
     {
       title: "Doctor Picture",
@@ -145,7 +188,6 @@ const Doctors = () => {
           <AvatarStatus
             size={30}
             src={record.doctorPicture}
-            name={record.doctorName}
           />
         </Flex>
       ),
@@ -207,6 +249,8 @@ const Doctors = () => {
       onCancel() {},
     });
   }
+
+  */
   function showConfirmDeleteDoctor(doctorName, documentId) {
     confirm({
       title: `Are you sure you want to delete ${doctorName} account`,
@@ -250,21 +294,16 @@ const Doctors = () => {
   function activateDoctor(doctorId) {
     dispatch(setDoctorAccountStatusInit(doctorId, "active"));
   }
+  /*
   function deleteTopRated(doctorId) {
     dispatch(deleteTopRatedInit(doctorId));
   }
   function addTopRated(doctorId) {
     dispatch(addTopRatedDoctorInit(doctorId));
   }
+  */
   function deleteDoctorAccount(doctorId) {
     dispatch(deleteDoctorInit(doctorId));
-  }
-  function handleSearch(searchText) {
-    const filteredEvents = doctorList.filter(({ doctorName }) => {
-      doctorName = doctorName.toLowerCase();
-      return doctorName.includes(searchText);
-    });
-    doctorList = filteredEvents;
   }
 
   return (
@@ -289,6 +328,7 @@ const Doctors = () => {
               loading={loading}
             />
           </TabPane>
+          {/*
           <TabPane
             tab={
               <span>
@@ -304,6 +344,7 @@ const Doctors = () => {
               loading={topRatedLoading}
             />
           </TabPane>
+          */}
         </Tabs>
       </Card>
     </>

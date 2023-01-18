@@ -13,7 +13,6 @@ import {
 } from "redux/constants/WithdrawRequestConstants.js";
 
 import FirebaseService from "services/FirebaseService";
-import { setWithdrawalPercentageSuccess } from "redux/actions/SettingsActions.js";
 
 export function* GetWithdrawRequest() {
   yield takeEvery(GET_WITHDRAW_REQUEST_INIT, function* () {

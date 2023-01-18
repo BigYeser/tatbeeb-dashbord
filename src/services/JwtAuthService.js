@@ -10,7 +10,7 @@ JwtAuthService.login = function (data) {
       'public-request': 'true'
     },
 		data: data
-	})
+	});
 }
 
 JwtAuthService.signUp = function (data) {

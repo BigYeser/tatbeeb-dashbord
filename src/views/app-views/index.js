@@ -28,7 +28,7 @@ export const AppViews = () => {
           component={lazy(() => import(`./user`))}
         />
         <Route
-          path={`${APP_PREFIX_PATH}/new-doctor-category/:id/:name`}
+          path={`${APP_PREFIX_PATH}/new-doctor-category/:id/:name/:translation`}
           component={lazy(() => import(`./new-doctor-category`))}
         />
         <Route
@@ -44,6 +44,10 @@ export const AppViews = () => {
           component={lazy(() => import(`./withdraw-request`))}
         />
         <Route
+          path={`${APP_PREFIX_PATH}/charge`}
+          component={lazy(() => import(`./charge`))}
+        />
+         <Route
           path={`${APP_PREFIX_PATH}/transaction`}
           component={lazy(() => import(`./transaction`))}
         />

@@ -5,7 +5,7 @@ import { fetchUsersInit, deleteUserInit } from "redux/actions/Users";
 
 const Users = () => {
   const { confirm } = Modal;
-  const { userList, error, loading, deleted } = useSelector(
+  const { userList, loading } = useSelector(
     (state) => ({
       userList: state.users.data,
       error: state.users.error,
@@ -35,6 +35,20 @@ const Users = () => {
   function deleteUser(userId) {
     dispatch(deleteUserInit(userId));
   }
+
+  // eslint-disable-next-line array-callback-return
+  userList.map(el => {
+    let date = new Date(el.createdAt)
+    el.createdAt_newFormate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+'\n'+dateFormat(date.getHours())+":"+dateFormat(date.getMinutes());
+  });
+
+  function dateFormat(el){
+    if(el < 10){
+      return "0"+el;
+    }
+    return el;
+  }  
+
   const columns = [
     {
       title: "Display Name",
@@ -48,8 +62,8 @@ const Users = () => {
     },
     {
       title: "Created At",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "createdAt_newFormate",
+      key: "createdAt_newFormate",
     },
     {
       title: "Role",
@@ -61,6 +75,7 @@ const Users = () => {
       render: (text, record) => (
         <Space size="middle">
           <a
+            href="any.com"
             onClick={() =>
               showConfirmAddTopRated(record.displayName, record.id)
             }
@@ -71,7 +86,6 @@ const Users = () => {
       ),
     },
   ];
-  console.log("loading : " + loading);
   return (
     <div>
       <Card title="List Users">

@@ -1,15 +1,14 @@
-import React from "react";
 import { Menu, Dropdown, Avatar } from "antd";
 import { connect } from "react-redux";
 import {
-  EditOutlined,
   SettingOutlined,
-  ShopOutlined,
   QuestionCircleOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import Icon from "components/util-components/Icon";
+//import Icon from "components/util-components/Icon";
 import { signOut } from "redux/actions/Auth";
+//import { AUTH_TOKEN } from "../../redux/constants/Auth";
+//import {FirebaseService} from "../../services/FirebaseService";
 
 const menuItem = [
   {
@@ -20,11 +19,13 @@ const menuItem = [
   {
     title: "Help Center",
     icon: QuestionCircleOutlined,
-    path: "/",
+    path: "https://tatbeeb.app/terms-of-use-for-patients/",
   },
 ];
 
+//const data =  FirebaseService.fetchDocument("Users",localStorage.getItem(AUTH_TOKEN));
 export const NavProfile = ({ signOut }) => {
+
   const profileImg = "/img/avatars/thumb-16.jpg";
   const profileMenu = (
     <div className="nav-profile nav-dropdown">
@@ -39,6 +40,7 @@ export const NavProfile = ({ signOut }) => {
       </div>
       <div className="nav-profile-body">
         <Menu>
+          {/*
           {menuItem.map((el, i) => {
             return (
               <Menu.Item key={i}>
@@ -49,6 +51,7 @@ export const NavProfile = ({ signOut }) => {
               </Menu.Item>
             );
           })}
+        */}
           <Menu.Item key={menuItem.length + 1} onClick={(e) => signOut()}>
             <span>
               <LogoutOutlined />
